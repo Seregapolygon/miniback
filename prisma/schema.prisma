@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendor {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  description   String
+  photo         String
+}
+
+model DeviceModel {
+  id            Int @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  type          String
+  photo         String
+  deviceReadingList DeviceReadingList[]
+  deviceCommandList DeviceCommandList[]
+}
+
+model DeviceReadingList {
+  id            Int @id @default(autoincrement())
+  name          String
+  deviceModel   DeviceModel? @relation(fields: [deviceModelId], references: [id])
+  deviceModelId Int?
+}
+
+model DeviceCommandList {
+  id            Int @id @default(autoincrement())
+  name          String
+  deviceModel   DeviceModel? @relation(fields: [deviceModelId], references: [id])
+  deviceModelId Int?
+}
+
+model Account {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Role {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}

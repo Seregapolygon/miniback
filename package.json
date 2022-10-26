@@ -1,0 +1,31 @@
+{
+  "name": "miniback",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "mini microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seregapolygon/miniback.git"
+  },
+  "author": "seregapolygon@yandex.ru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Seregapolygon/miniback/issues"
+  },
+  "homepage": "https://github.com/Seregapolygon/miniback#readme",
+  "dependencies": {
+    "@prisma/client": "^4.5.0",
+    "axios": "^1.1.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "ws": "^8.10.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.5.0"
+  }
+}
