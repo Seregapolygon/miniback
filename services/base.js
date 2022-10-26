@@ -38,7 +38,7 @@ class BaseService{
             const newVendor = body
             delete newVendor.id
             db[entity].upsert({
-                where: { id: body.id },
+                where: { id: +body.id },
                 update: newVendor.body,
                 create: newVendor.body
             }).then(() => {
