@@ -1,5 +1,5 @@
 export default {
-    exposedPort: 9095,
-    protectedPort: 9096,
-    wsPort: 9098
+    exposedPort: 9091,
+    protectedPort: 9090,
+    wsPort: 9092
 }

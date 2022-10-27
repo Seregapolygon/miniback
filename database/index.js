@@ -71,6 +71,26 @@ class Table {
     }
 
     /**
+     * Удаление записи таблицы по id.
+     * @param id - идентификатор записи.
+     * @return {boolean} - true если удален, false если удаление не прошло.
+     */
+    delete(id) {
+        if (id) {
+            const oldIndex = this.data.findIndex(el => el.id && el.id === id)
+            if (oldIndex > -1)
+            {
+                delete this.data[oldIndex]
+                this.update()
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
+
+    /**
      * Безусловное добавление в конец массива.
      * @param payload
      */

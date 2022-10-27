@@ -1,20 +1,15 @@
 import express from 'express'
 import authService from "../services/auth.js"
+import functions from "../libraries/functions.js"
 
 class AuthController {
 
     mainRouter = express.Router()
     protectedRouter = express.Router()
 
-    camelize(str) {
-        let arr = str.split('-')
-        let capital = arr.map(item=> item.charAt(0).toUpperCase() + item.slice(1).toLowerCase())
-        return capital.join("")
-    }
-
     simpleRouting(req, res) {
         try {
-            let command = this.camelize(req.params.command)
+            let command = functions.toCamelCase(req.params.command)
             const result = authService[command](req.body)
             res.send(result)
             res.end()
@@ -26,11 +21,10 @@ class AuthController {
 
     constructor() {
         // Добавляем обработчики роутов.
-        this.mainRouter.get('/:command', this.simpleRouting)
-        this.mainRouter.post('/:command', this.simpleRouting)
-        this.protectedRouter.post('/:command', this.simpleRouting)
-        this.protectedRouter.get('/:command', this.simpleRouting)
-
+        this.mainRouter.get('/:command', (req, res) => { this.simpleRouting(req,res) })
+        this.mainRouter.post('/:command', (req, res) => { this.simpleRouting(req,res) })
+        this.protectedRouter.post('/:command', (req, res) => { this.simpleRouting(req,res) })
+        this.protectedRouter.get('/:command', (req, res) => { this.simpleRouting(req,res) })
     }
 }
 

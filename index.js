@@ -5,11 +5,9 @@ import auth from "./libraries/auth.js"
 import fileDB from "./database/index.js"
 import {connections} from "./libraries/ws.js"
 import authController from "./controllers/auth.js"
-import vendorController from "./controllers/vendor.js"
-import accountController from "./controllers/account.js"
-import deviceModelController from "./controllers/device-model.js"
-import roleController from "./controllers/role.js"
-import userController from "./controllers/user.js"
+import {WebSocket} from "ws"
+import BaseController from "./structure/base-controller.js"
+import functions from "./libraries/functions.js"
 
 // Создаем и настраиваем серваки.
 // .. основной сервер.
@@ -46,12 +44,26 @@ exposedServer.use(express.urlencoded({ extended: true })) // for parsing applica
 exposedServer.use('/auth', authController.mainRouter)
 protectedServer.use('/auth', authController.protectedRouter)
 
-// Формируем роутинг для всего остального.
-protectedServer.use('/vendor', vendorController.router)
-protectedServer.use('/account', accountController.router)
-protectedServer.use('/device-model', deviceModelController.router)
-protectedServer.use('/role', roleController.router)
-protectedServer.use('/user', userController.router)
+// Формируем роутинг для известных контроллеров.
+// protectedServer.use('/vendor', vendorController.router)
+// protectedServer.use('/account', accountController.router)
+// protectedServer.use('/device-model', deviceModelController.router)
+// protectedServer.use('/role', roleController.router)
+// protectedServer.use('/user', userController.router)
+
+// Формируем роутинг для неизвестных контроллеров.
+const baseController = new BaseController()
+protectedServer.param('entity', (req, res, next, value) => {
+    req.entityName = functions.toCamelCase(value)
+    next()
+})
+protectedServer.use('/:entity', baseController.router)
+
+exposedServer.param('entity', (req, res, next, value) => {
+    req.entityName = functions.toCamelCase(value)
+    next()
+})
+exposedServer.use('/:entity', baseController.router)
 
 // Запускаем периодические задачи.
 setInterval(() => {
@@ -81,11 +93,10 @@ setInterval(() => {
 // Инициализируем базу данных и запускаем http сервак.
 fileDB.connect().then(()=>{
     protectedServer.listen(config.protectedPort, function(){
-        console.log('\n', 'Server start - ', new Date().toString())
-        console.log(`-- Server HTTP:${config.protectedPort} is listening... --`)
+        console.log(`-- Protected HTTP:${config.protectedPort} is listening... --`)
     })
     exposedServer.listen(config.exposedPort, function(){
-        console.log(`-- Server HTTP:${config.exposedPort} is listening... --`)
+        console.log(`-- Exposed HTTP:${config.exposedPort} is listening... --`)
     })
 })
 

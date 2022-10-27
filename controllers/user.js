@@ -1,4 +1,4 @@
-import BaseController from "./base.js";
+import BaseController from "../structure/base-controller.js";
 
 class UserController extends BaseController{
 
