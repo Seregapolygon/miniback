@@ -1,3 +1,6 @@
+import express from "express"
+import cors from "cors"
+
 export default {
 
     toCamelCase(str) {
@@ -19,5 +22,13 @@ export default {
                 raw: error
             })
         })
+    },
+
+    expressServerPrepare() {
+        const server = express()
+        server.use(cors({maxAge: 86400}))
+        server.use(express.json()) // for parsing application/json
+        server.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+        return server
     }
 }

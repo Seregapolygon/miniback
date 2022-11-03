@@ -28,7 +28,7 @@ export default {
         try {
             return jwt.verify(token, secret)
         } catch (e) {
-            return { error: e}
+            return { error: e }
         }
     },
 
@@ -39,8 +39,8 @@ export default {
      */
     generateCouple (payload) {
         const couple = {
-            accessToken: this.generateToken(payload, '6h'),
-            refreshToken: this.generateToken(payload, '5d')
+            accessToken: this.generateToken(payload, '1h'),
+            refreshToken: this.generateToken(payload, '2d')
         }
         fileDB.tokens.add(couple)
         fileDB.tokens.update()

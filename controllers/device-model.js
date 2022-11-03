@@ -1,16 +1,17 @@
-import BaseController from "../structure/base-controller.js";
+import BaseController from "../structure/base-controller.js"
+import deviceModelService from "../services/device-model.js"
 
 class DeviceModelController extends BaseController{
 
     constructor() {
         // Добавим роуты по умолчанию.
-        super()
+        super('deviceModel')
+        this.service = deviceModelService
 
-        this.entityName = 'deviceModel'
         // Добавляем обработчики роутов.
-        // this.router.get('/:ANY_PARAM', (req, res) => {
-        //     this.resultProcess(this.ANY_SERVICE.ANY_METHOD(this.entityName, req.params), res)
-        // })
+        this.router.get('/', (req, res) => {
+             this.resultProcess(deviceModelService.getModelList(req.query), res)
+        })
 
     }
 }

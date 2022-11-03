@@ -1,25 +1,27 @@
 import db from "../libraries/prisma.js"
 import functions from "../libraries/functions.js";
+import dto from "./dto.js"
 
 class BaseService{
 
     getItem(entity, body) {
         return new Promise((resolve, reject) => {
-            const response = db[entity].findUnique({
-                where: { id: body.id }
-            })
-            functions.endPromise(response, resolve, reject, `Failed to get ${entity} item`)
+            const query = { where: { id: body.id } }
+            if (dto[entity + 'Item']) query.select = dto[entity + 'Item']
+            functions.endPromise(db[entity].findUnique(query), resolve, reject, `Failed to get ${entity} item`)
         })
     }
 
     getList(entity, body) {
         return new Promise((resolve, reject) => {
-            const response = db[entity].findMany({
+            if (!body.filter) body.filter = ''
+            const query = {
                 skip: Number(body.page) * Number(body.items),
                 take: Number(body.items),
                 where: { name: { contains: body.filter } }
-            })
-            functions.endPromise(response, resolve, reject, `Error getting ${entity} list`)
+            }
+            if (dto[entity + 'List']) query.select = dto[entity + 'List']
+            functions.endPromise(db[entity].findMany(query), resolve, reject, `Error getting ${entity} list`)
         })
     }
 
