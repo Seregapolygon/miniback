@@ -45,12 +45,77 @@ model Account {
   name          String   @db.VarChar(255)
 }
 
+model Asset {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model AssetTemplate {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
 model User {
   id            Int      @id @default(autoincrement())
   name          String   @db.VarChar(255)
 }
 
 model Role {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Rls {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Device {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Billing {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Dashboard {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model DashboardTemplate {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Widget {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model WidgetTemplate {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Kit {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model KitTemplate {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model Notification {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+}
+
+model NotificationTemplate {
   id            Int      @id @default(autoincrement())
   name          String   @db.VarChar(255)
 }

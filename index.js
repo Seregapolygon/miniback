@@ -2,7 +2,7 @@ import App from "./structure/app.js"
 import deviceModelController from "./controllers/device-model.js"
 
 // Создаемп приложение.
-let nodeApp = new App(true)
+let nodeApp = new App()
 
 // Подключаем недостающие контроллеры.
 nodeApp.setController('/device-models', deviceModelController)

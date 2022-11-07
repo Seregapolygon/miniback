@@ -1,0 +1,22 @@
+export default {
+    'vendors': 'vendor',
+    'device-models': 'deviceModel',
+    'device-reading-list': 'DeviceReadingList',
+    'device-command-list': 'DeviceCommandList',
+    'accounts': 'account',
+    'assets': 'asset',
+    'asset-templates': 'assetTemplate',
+    'users': 'user',
+    'roles': 'role',
+    'rls': 'rls',
+    'devices': 'device',
+    'billing': 'billing',
+    'dashboards': 'dashboard',
+    'dashboard-templates': 'dashboardTemplate',
+    'widgets': 'widget',
+    'widget-templates': 'widgetTemplate',
+    'kits': 'kit',
+    'kit-templates': 'kitTemplate',
+    'notifications': 'notification',
+    'notification-templates': 'notificationTemplate'
+}

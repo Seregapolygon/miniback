@@ -4,6 +4,7 @@ import config from "../config/index.js";
 import auth from "../libraries/auth.js";
 import authController from "../controllers/auth.js";
 import BaseController from "./base-controller.js";
+import routeRepresentation from "../config/routeRepresentation.js";
 
 class App {
     exposedServer = undefined
@@ -11,7 +12,7 @@ class App {
     fileDB = undefined
     wsConnections = undefined
 
-    constructor(wsUse = false) {
+    constructor() {
         this.exposedServer = functions.expressServerPrepare()
         this.protectedServer = functions.expressServerPrepare()
         this.fileDB = database
@@ -19,7 +20,7 @@ class App {
         this._setTokenDefender()
         this._setAuthController()
 
-        if (wsUse) {
+        if (config.wsPort) {
             this.wsConnections = import('../libraries/ws.js').then(module => {
                 module.default.start()
             }).catch(error => {
@@ -82,8 +83,10 @@ class App {
         // Формируем роутинг для неизвестных контроллеров.
         const baseController = new BaseController()
         this.protectedServer.param('entity', (req, res, next, value) => {
-            req.entityName = functions.toCamelCase(value)
-            req.entityName = req.entityName.substring(0, req.entityName.length - 1)
+            // req.entityName = functions.toCamelCase(value)
+            // req.entityName = req.entityName.substring(0, req.entityName.length - 1)
+            if (routeRepresentation[value]) req.entityName = routeRepresentation[value]
+            else req.entityName = 'none'
             next()
         })
         this.protectedServer.use('/:entity', baseController.router)
