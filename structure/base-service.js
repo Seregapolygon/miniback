@@ -4,9 +4,20 @@ import dto from "./dto.js"
 
 class BaseService{
 
+    getSelection(entity, body) {
+        return new Promise((resolve, reject) => {
+            const query = {
+                skip: 0, take: 20,
+                where: { name: { contains: body.filterByName } }
+            }
+            if (dto[entity + 'Selection']) query.select = dto[entity + 'Selection']
+            functions.endPromise(db[entity].findMany(query), resolve, reject, `Error getting ${entity} selection`)
+        })
+    }
+
     getItem(entity, body) {
         return new Promise((resolve, reject) => {
-            const query = { where: { id: body.id } }
+            const query = { where: { uid: body.uid } }
             if (dto[entity + 'Item']) query.select = dto[entity + 'Item']
             functions.endPromise(db[entity].findUnique(query), resolve, reject, `Failed to get ${entity} item`)
         })
@@ -28,9 +39,9 @@ class BaseService{
     save(entity, body) {
         return new Promise((resolve, reject) => {
             const data = body
-            delete data.id
+            delete data.uid
             const response = db[entity].upsert({
-                where: { id: body.id },
+                where: { uid: body.uid },
                 update: data.body,
                 create: data.body
             })
@@ -50,9 +61,9 @@ class BaseService{
     update(entity, body) {
         return new Promise((resolve, reject) => {
             const data = {... body}
-            delete data.id
+            delete data.uid
             const response = db[entity].update({
-                where: { id: body.id },
+                where: { uid: body.uid },
                 data: data
             })
             functions.endPromise(response, resolve, reject, `${entity} item wasn't updated`)
@@ -61,7 +72,7 @@ class BaseService{
 
     delete(entity, body) {
         return new Promise((resolve, reject) => {
-            const response = db[entity].delete({ where: { id: body.id } })
+            const response = db[entity].delete({ where: { uid: body.uid } })
             functions.endPromise(response, resolve, reject, `${entity} item wasn't deleted`)
         })
     }

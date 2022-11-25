@@ -1,7 +1,7 @@
 export default {
 
     deviceModelList: {
-        id: true,
+        uid: true,
         name: true,
         type: true,
         photo: true,
@@ -10,11 +10,17 @@ export default {
     },
 
     deviceModelItem: {
-        id: true,
+        uid: true,
         name: true,
         type: true,
         photo: true,
-        deviceReadingList: { select: { id: true, name: true } },
-        deviceCommandList: { select: { id: true, name: true } }
+        vendor: { select: { uid: true, name: true } },
+        deviceReadingList: { select: { uid: true, name: true } },
+        deviceCommandList: { select: { uid: true, name: true } }
+    },
+
+    vendorSelection: {
+        uid: true,
+        name: true
     }
 }

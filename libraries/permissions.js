@@ -1,4 +1,4 @@
-export default [
+const p = [
     'account.view', 'account.edit',
     'user.view', 'user.edit',
     'role.view', 'role.create', 'role.edit', 'role.delete',
@@ -16,4 +16,10 @@ export default [
     'notification.template.view', 'notification.template.create', 'notification.template.edit', 'notification.template.delete',
     'notification.view', 'notification.create', 'notification.edit', 'notification.delete',
     'billing.view', 'billing.create', 'billing.edit', 'billing.delete',
+]
+
+export default [
+    'asset.view', 'asset.create', 'asset.edit', 'asset.delete',
+    'device.model.view', 'device.model.create', 'device.model.edit', 'device.model.delete',
+    'vendor.view', 'vendor.create', 'vendor.edit', 'vendor.delete'
 ]

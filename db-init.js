@@ -3,7 +3,7 @@ import db from "./libraries/prisma.js";
 const tables = {
     deviceModels: false,
     vendors: false,
-    users: true
+    users: false
 }
 
 const deviceModels = [

@@ -31,11 +31,11 @@ class BaseController {
         })
 
         // Валидация параметров.
-        this.router.param('id', (req, res, next, value) => {
-            req.payload.id = Number(value)
-            if (req.payload.id && req.payload.id > 0) next()
+        this.router.param('uid', (req, res, next, value) => {
+            req.payload.uid = Number(value)
+            if (req.payload.uid && req.payload.uid > 0) next()
             else {
-                res.status(404).json({error: "'id' param has a wrong value."})
+                res.status(404).json({error: "'uid' param has a wrong value."})
                 res.end()
             }
         })
@@ -51,6 +51,10 @@ class BaseController {
             req.payload.filter = String(value)
             next()
         })
+        this.router.param('filterByName', (req, res, next, value) => {
+            req.payload.filterByName = String(value)
+            next()
+        })
 
         // Добавляем обработчики роутов.
         // Получение списка объектов с фильтрацией по наименованию.
@@ -62,8 +66,14 @@ class BaseController {
             req.payload.filter = ''
             this.resultProcess(this.baseService.getList(req.entityName, req.payload), res)
         }) */
+
+        // Получение данных для ввода по строке.
+        this.router.get('/selections', (req,res)=>{
+            req.payload = req.query
+            this.resultProcess(this.baseService.getSelection(req.entityName, req.payload), res)
+        })
         // Получение данных одного объекта.
-        this.router.get('/:id', (req, res) => {
+        this.router.get('/:uid', (req, res) => {
             this.resultProcess(this.baseService.getItem(req.entityName, req.payload), res)
         })
         // Для получения списка с параметрами.
@@ -77,12 +87,12 @@ class BaseController {
             this.resultProcess(this.baseService.create(req.entityName, req.body), res)
         })
         // Обновление объекта.
-        this.router.put('/:id', (req, res) => {
-            req.body.id = req.payload.id
+        this.router.put('/:uid', (req, res) => {
+            req.body.uid = req.payload.uid
             this.resultProcess(this.baseService.update(req.entityName, req.body), res)
         })
-        // Удаление объекта по id.
-        this.router.delete('/:id', (req, res) => {
+        // Удаление объекта по uid.
+        this.router.delete('/:uid', (req, res) => {
             this.resultProcess(this.baseService.delete(req.entityName, req.payload), res)
         })
     }
