@@ -30,7 +30,11 @@ class WsConnection {
             if (this.connections.length) {}
             this.connections.forEach(con => {
                 if (con.client.readyState === WebSocket.OPEN)
-                    con.client.send('Device is offline ' + new Date().getTime())
+                    // con.client.send('Device is offline ' + new Date().getTime())
+                    con.client.send(JSON.stringify({
+                        timestamp: new Date().getTime(),
+                        message: "Device is offline!"
+                    }))
                 else
                     con.client.close()
             })

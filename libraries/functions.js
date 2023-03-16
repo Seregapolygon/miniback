@@ -14,7 +14,15 @@ export default {
 
     endPromise(promise, resolve, reject, message = 'error') {
         promise.then(result => {
-            if (result) resolve(result)
+            if (result) {
+                const paramNames = Object.keys(result)
+                paramNames.forEach(key => {
+                    if (result[key] === null) {
+                        result[key] = { uid: 0, name: '' }
+                    }
+                })
+                resolve(result)
+            }
             else reject({ error: message })
         }).catch(error => {
             reject({

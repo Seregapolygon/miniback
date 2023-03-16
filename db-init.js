@@ -1,4 +1,5 @@
 import db from "./libraries/prisma.js";
+import axios from "axios";
 
 const tables = {
     deviceModels: false,
@@ -354,3 +355,14 @@ if (tables.users) {
         })
     })
 }
+
+// Make a request for a user with a given ID
+axios.get('http://192.168.1.50:55555/raw-messages')
+    .then(response => {
+        // handle success
+        console.log(response);
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    });
